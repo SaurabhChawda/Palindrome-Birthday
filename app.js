@@ -26,16 +26,28 @@ function clickHandler(e){
     }
 
 }
-
-function reverseStr(str) {
-    var listOfChars = str.split('');
-    var reverseListOfChars = listOfChars.reverse();
-    var reversedStr = reverseListOfChars.join('');
-    return reversedStr;
+function checkPalindromeForAllDateFormats(date) {
+    var listOfPalindromes = getAllDateFormats(date);
+    var flag = false;
+    for (var i = 0; i < listOfPalindromes.length; i++) {
+        if (isPalindrome(listOfPalindromes[i])) {
+            flag = true;
+            break;
+        }
+    }
+    return flag;
 }
-function isPalindrome(str) {
-    var reverse = reverseStr(str);
-    return str === reverse; 
+function getAllDateFormats(date) {
+    var dateStr = convertDateToStr(date);
+
+    var ddmmyyyy = dateStr.day + dateStr.month + dateStr.year;
+    var mmddyyyy = dateStr.month + dateStr.day + dateStr.year;
+    var yyyymmdd = dateStr.year + dateStr.month + dateStr.day;
+    var ddmmyy = dateStr.day + dateStr.month + dateStr.year.slice(-2);
+    var mmddyy = dateStr.month + dateStr.day + dateStr.year.slice(-2);
+    var yymmdd = dateStr.year.slice(-2) + dateStr.month + dateStr.day;
+
+    return[ddmmyyyy, mmddyyyy, yyyymmdd, ddmmyy, mmddyy, yymmdd];
 }
 function convertDateToStr(date) {
     var dateStr = { day: '', month: '', year: '' };
@@ -54,42 +66,30 @@ function convertDateToStr(date) {
     dateStr.year = date.year.toString();
     return dateStr;
 }
-function getAllDateFormats(date) {
-    var dateStr = convertDateToStr(date);
-
-    var ddmmyyyy = dateStr.day + dateStr.month + dateStr.year;
-    var mmddyyyy = dateStr.month + dateStr.day + dateStr.year;
-    var yyyymmdd = dateStr.year + dateStr.month + dateStr.day;
-    var ddmmyy = dateStr.day + dateStr.month + dateStr.year.slice(-2);
-    var mmddyy = dateStr.month + dateStr.day + dateStr.year.slice(-2);
-    var yymmdd = dateStr.year.slice(-2) + dateStr.month + dateStr.day;
-
-    return[ddmmyyyy, mmddyyyy, yyyymmdd, ddmmyy, mmddyy, yymmdd];
+function isPalindrome(str) {
+    var reverse = reverseStr(str);
+    return str === reverse; 
 }
-function checkPalindromeForAllDateFormats(date) {
-    var listOfPalindromes = getAllDateFormats(date);
-    var flag = false;
-    for (var i = 0; i < listOfPalindromes.length; i++) {
-        if (isPalindrome(listOfPalindromes[i])) {
-            flag = true;
-            break;
+function reverseStr(str) {
+    var listOfChars = str.split('');
+    var reverseListOfChars = listOfChars.reverse();
+    var reversedStr = reverseListOfChars.join('');
+    return reversedStr;
+}
+function getNextPalindromeDate(date){
+    var ctr = 0;
+    var nextDate = getNextDate(date);
+
+    while(1){
+        ctr++;
+        var isPalindrome = checkPalindromeForAllDateFormats(nextDate);
+        if(isPalindrome){
+          break;
         }
+        nextDate = getNextDate(nextDate);
     }
-    return flag;
+    return[ctr,nextDate];
 }
-function isLeapYear(year) {
-    if (year % 400 === 0) {
-        return true;
-    }
-    if (year % 100 === 0) {
-        return false;
-    }
-    if (year % 4 === 0) {
-        return true;
-    }
-        return false;
-}
-
 function getNextDate(date) {
     var day = date.day + 1;
     var month = date.month;
@@ -127,17 +127,16 @@ function getNextDate(date) {
     };
 
 }
-function getNextPalindromeDate(date){
-    var ctr = 0;
-    var nextDate = getNextDate(date);
 
-    while(1){
-        ctr++;
-        var isPalindrome = checkPalindromeForAllDateFormats(nextDate);
-        if(isPalindrome){
-          break;
-        }
-        nextDate = getNextDate(nextDate);
+function isLeapYear(year) {
+    if (year % 400 === 0) {
+        return true;
     }
-    return[ctr,nextDate];
+    if (year % 100 === 0) {
+        return false;
+    }
+    if (year % 4 === 0) {
+        return true;
+    }
+        return false;
 }
