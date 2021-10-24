@@ -2,7 +2,14 @@
 body{
     font-family: 'Koh Santepheap', cursive;
     background-color:darkseagreen;
+    margin:0
     
+}
+.heading{
+    margin:auto;
+    text-align:center;
+    background-color:white;
+    padding:1rem 1rem
 }
 .Container{
     max-width:400px;
@@ -11,13 +18,6 @@ body{
     border-radius: 1rem;
     padding:1rem 1rem;
 }
-.heading{
-    margin:auto;
-    text-align:center;
-    background-color:white;
-    padding:1rem 1rem
-}
-
 .Input-label{
     font-size:x-large;
     font-weight:bold;
@@ -28,7 +28,7 @@ input{
     padding:0.5rem;
     border-radius: 0.5rem;
     margin:auto;
-    display: flex;  
+    display: block;  
 }
 button{
     background-color:black;
@@ -36,12 +36,13 @@ button{
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     margin:1rem auto;
-    display: flex;  
+    display: block;  
 }
-
 Output{
+  border-style:solid;
+  border-radius: 1rem;
+  display: block;  
   text-align: center;
   background-color:transparent;
-  text-align: center;
-  padding:0.3rem 0.3rem;
+  padding:0.5rem 0.5rem;
 }

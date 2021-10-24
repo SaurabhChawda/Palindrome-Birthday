@@ -21,7 +21,9 @@ function clickHandler(e){
         }
         else{
             var[ctr,nextDate]= getNextPalindromeDate(date);
-            outputDOB.innerText= `The next Palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year},you missed it by ${ctr} days`
+            var[ptr,previousDate]= getPreviousPalindromeDate(date);
+             outputDOB.innerText="The previous Date Palindrome date is " +previousDate.day+"-"+previousDate.month+"-"+previousDate.year+"\n You missed it by" +ptr+"days"+"\n The next Palindrome date is " +nextDate.day+"-"+nextDate.month+"-"+nextDate.year+"\n You missed it by"+ctr+"days"
+            
         }
     }
 
@@ -139,4 +141,57 @@ function isLeapYear(year) {
         return true;
     }
         return false;
+}
+function getPreviousPalindromeDate(date) {
+  var ptr = 0;
+  var previousDate = getPreviousDate(date);
+  while (1) {
+    ptr++;
+    var isPalindrome = checkPalindromeForAllDateFormats(previousDate);
+    if (isPalindrome) {
+      break;
+    }
+    previousDate = getPreviousDate(previousDate);
+  }
+  return [ptr, previousDate];
+}
+function getPreviousDate(date) {
+  var day = date.day - 1;
+  var month = date.month;
+  var year = date.year;
+
+  var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0 - 11
+
+  if (month === 3) {
+    if (isLeapYear(year)) {
+      if (day < 1) {
+        day = 29;
+        month--;
+      }
+    } else {
+      if (day < 1) {
+        day = 28;
+        month--;
+      }
+    }
+  } else {
+    if (day < 1) {
+      month--;
+      if (month !== 0) {
+        day = daysInMonth[month - 1];
+      }
+    }
+  }
+
+  if (month < 1) {
+    month = 12;
+    day = daysInMonth[month - 1];
+    year--;
+  }
+
+  return {
+    day: day,
+    month: month,
+    year: year,
+  };
 }
